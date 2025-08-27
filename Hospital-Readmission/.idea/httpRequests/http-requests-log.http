@@ -1,0 +1,45 @@
+GET http://localhost:8000/api/patients/d6c0c90a-d772-40ef-ab4b-682d0a5c772c/
+User-Agent: IntelliJ HTTP Client/PyCharm 2025.2.0.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-08-25T123704.200.json
+
+###
+
+GET http://localhost:8000/api/doctor/885e6055-5237-4d2b-8d61-7bac1418472b/total_patients/
+User-Agent: IntelliJ HTTP Client/PyCharm 2025.2.0.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-08-25T123030.200.json
+
+###
+
+GET http://localhost:8000/api/doctor/885e6055-5237-4d2b-8d61-7bac1418472b/high_risk/
+User-Agent: IntelliJ HTTP Client/PyCharm 2025.2.0.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-08-25T122929.200.json
+
+###
+
+GET http://localhost:8000/api/patients/total/total_patients/
+User-Agent: IntelliJ HTTP Client/PyCharm 2025.2.0.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-08-25T113131.404.html
+
+###
+
+GET http://localhost:8000/api/patients/total_patients/
+User-Agent: IntelliJ HTTP Client/PyCharm 2025.2.0.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-08-25T112957.400.json
+
+###
+

@@ -1,0 +1,26 @@
+{
+  "doctor_id": "885e6055-5237-4d2b-8d61-7bac1418472b",
+  "high_risk_count": 1,
+  "patients": [
+    {
+      "id": "fe1d27a5-d79c-495e-bbbd-e4da04d6f3aa",
+      "doctor_id": "885e6055-5237-4d2b-8d61-7bac1418472b",
+      "name": "John Doe",
+      "address": "123 Main Street, NY",
+      "age": 78,
+      "gender": "Male",
+      "bmi": 35.1,
+      "cholesterol": 255,
+      "blood_pressure": "160/100",
+      "diabetes": "Yes",
+      "hypertension": "Yes",
+      "medication_count": 10,
+      "length_of_stay": 20,
+      "discharge_destination": "Nursing_Facility",
+      "phonenumber": "+11234567890",
+      "readmitted": true,
+      "readmission_probability": 0.8599766956176427,
+      "created_at": "2025-08-24T18:09:38.004722+00:00"
+    }
+  ]
+}

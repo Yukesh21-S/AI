@@ -1,0 +1,20 @@
+{
+  "id": "d6c0c90a-d772-40ef-ab4b-682d0a5c772c",
+  "doctor_id": "885e6055-5237-4d2b-8d61-7bac1418472b",
+  "name": "Ravi Kumar",
+  "address": "Bangalore, India",
+  "age": 32,
+  "gender": "Male",
+  "bmi": 22.3,
+  "cholesterol": 175,
+  "blood_pressure": "118/76",
+  "diabetes": "No",
+  "hypertension": "No",
+  "medication_count": 2,
+  "length_of_stay": 3,
+  "discharge_destination": "Home",
+  "phonenumber": "9876543210",
+  "readmitted": false,
+  "readmission_probability": 0.27062951421099324,
+  "created_at": "2025-08-25T06:57:23.989645+00:00"
+}
