@@ -13,6 +13,7 @@ import ManagementDoctors from './pages/ManagementDoctors'
 import Analytics from './pages/Analytics'
 import DoctorProfile from './pages/DoctorProfile'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import TestConnection from './components/TestConnection'
 import SessionTest from './components/SessionTest'
 import TokenVerification from './components/TokenVerification'
@@ -39,49 +40,50 @@ function App() {
 
   return (
     <Routes>
+      {/* Default root: show login when not authenticated; otherwise redirect to dashboard */}
+      <Route path="/" element={!user ? <Login /> : <Navigate to={loginRedirect()} />} />
+
       {/* Public routes */}
       <Route path="/login" element={!user ? <Login /> : <Navigate to={loginRedirect()} />} />
       <Route path="/signup" element={!user ? <Signup /> : <Navigate to={loginRedirect()} />} />
       <Route path="/forgot-password" element={!user ? <ForgotPassword /> : <Navigate to="/login" />} />
+      <Route path="/reset-password" element={!user ? <ResetPassword /> : <Navigate to={loginRedirect()} />} />
       <Route path="/test" element={<TestConnection />} />
       <Route path="/session-test" element={<SessionTest />} />
       <Route path="/token-verification" element={<TokenVerification />} />
       <Route path="/login-test" element={<LoginResponseTest />} />
       <Route path="/token-flow-test" element={<TokenFlowTest />} />
-      
-      {/* Doctor routes */}
-      <Route path="/" element={user ? <Layout /> : <Navigate to="/login" />}>
-        <Route index element={<Navigate to="/dashboard" />} />
-        <Route path="dashboard" element={
+
+      {/* Authenticated routes under Layout */}
+      <Route element={user ? <Layout /> : <Navigate to="/login" />}>
+        {/* Doctor routes */}
+        <Route path="/dashboard" element={
           <RoleRoute allowedRoles={["doctor", "patient"]}><Dashboard /></RoleRoute>
         } />
-        <Route path="profile" element={
+        <Route path="/profile" element={
           <RoleRoute allowedRoles={["doctor", "patient"]}><DoctorProfile /></RoleRoute>
         } />
-        <Route path="patients" element={
+        <Route path="/patients" element={
           <RoleRoute allowedRoles={["doctor"]}><Patients /></RoleRoute>
         } />
-        <Route path="patients/add" element={
+        <Route path="/patients/add" element={
           <RoleRoute allowedRoles={["doctor"]}><AddPatient /></RoleRoute>
         } />
-        <Route path="patients/:id" element={
+        <Route path="/patients/:id" element={
           <RoleRoute allowedRoles={["doctor"]}><PatientDetails /></RoleRoute>
         } />
-        <Route path="patients/:id/edit" element={
+        <Route path="/patients/:id/edit" element={
           <RoleRoute allowedRoles={["doctor"]}><EditPatient /></RoleRoute>
         } />
-      </Route>
 
-      {/* Management routes */}
-      <Route path="/management" element={user ? <Layout /> : <Navigate to="/login" />}>
-        <Route index element={<Navigate to="/management/dashboard" />} />
-        <Route path="dashboard" element={
+        {/* Management routes */}
+        <Route path="/management/dashboard" element={
           <RoleRoute allowedRoles={["management"]}><ManagementDashboard /></RoleRoute>
         } />
-        <Route path="analytics" element={
+        <Route path="/management/analytics" element={
           <RoleRoute allowedRoles={["management"]}><Analytics /></RoleRoute>
         } />
-        <Route path="doctors" element={
+        <Route path="/management/doctors" element={
           <RoleRoute allowedRoles={["management"]}><ManagementDoctors /></RoleRoute>
         } />
       </Route>

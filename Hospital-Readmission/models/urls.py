@@ -9,6 +9,7 @@ urlpatterns = [
     path("doctor/signup/", views.signup_doctor),
     path("doctor/login/", views.login_doctor),
     path("doctor/forgot-password/", views.forgot_password),
+    path("doctor/reset-password/", views.reset_password),
     # Single login handler for both doctors and management (same view, role-based)
     path("management/login/", views.login_doctor),
     path("doctor/profile/", views.doctor_profile),

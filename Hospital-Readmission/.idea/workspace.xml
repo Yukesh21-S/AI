@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae29201d-64d8-4d9e-b1dc-e60229fb53f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Hospitalfrontend/dist/assets/index-1c9994cc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospitalfrontend/dist/assets/index-98ec681b.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospitalfrontend/dist/assets/index-ece3b4ed.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Hospitalfrontend/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/lib/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/AddPatient.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/AddPatient.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Analytics.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Analytics.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/ManagementDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/ManagementDashboard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Hospitalfrontend/src/pages/Login.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +142,8 @@
       <workItem from="1756094858847" duration="35450000" />
       <workItem from="1756180208943" duration="15985000" />
       <workItem from="1756213536625" duration="10907000" />
-      <workItem from="1756267340962" duration="8947000" />
+      <workItem from="1756267340962" duration="9478000" />
+      <workItem from="1756393050356" duration="8301000" />
     </task>
     <servers />
   </component>
@@ -164,7 +160,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/models/views.py</url>
-          <line>745</line>
+          <line>835</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

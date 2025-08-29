@@ -59,11 +59,7 @@ A modern React.js frontend for the Hospital Readmission Prediction System, built
    ```
 
 3. **Create environment variables**
-   Create a `.env.local` file in the frontend directory:
-   ```env
-   VITE_SUPABASE_URL=http://localhost:8000
-   VITE_SUPABASE_ANON_KEY=your-anon-key
-   ```
+   Create a `.env.local` file in the frontend directory if needed for your backend API.
 
 4. **Start the development server**
    ```bash

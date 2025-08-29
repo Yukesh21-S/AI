@@ -1,29 +1,28 @@
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-
-from .helper.get_authenticated_doctor import get_authenticated_doctor
-from .models import Doctor, Patient
-from .serializers import DoctorSerializer, PatientSerializer
-from .supabase_client import supabase
-
-import joblib
-import pandas as pd
-
-
-# -------- DOCTOR AUTH -------- #
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from django.conf import settings
+from supabase import create_client, Client
+
+from .helper.get_authenticated_doctor import get_authenticated_doctor
+from .models import Doctor, Patient
+from .serializers import DoctorSerializer, PatientSerializer
+
+import joblib
+import pandas as pd
+
+# Initialize Supabase client (service role key recommended for admin ops)
+supabase: Client = create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
+
+# -------- DOCTOR AUTH -------- #
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+
 @api_view(["POST"])
 def signup_doctor(request):
     """
@@ -133,16 +132,107 @@ def login_doctor(request):
 @api_view(["POST"])
 def forgot_password(request):
     """
-    Send Supabase password reset email
+    Send Supabase password reset email with redirect back to frontend reset page.
     Request: { "email": "" }
     """
     email = request.data.get("email")
+    if not email:
+        return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+
     try:
-        supabase.auth.reset_password_email(email)
+        # Build redirect URL to frontend reset page
+        frontend_url = getattr(settings, "FRONTEND_URL", None) or "http://localhost:5173"
+        redirect_to = f"{frontend_url}/reset-password"
+
+        # Generate recovery link with redirect_to
+        link_result = supabase.auth.admin.generate_link({
+            "type": "recovery",
+            "email": email,
+            "options": {
+                "redirect_to": redirect_to
+            }
+        })
+        
+        # Extract the action link from the result
+        action_link = link_result.properties.action_link
+        
+        # Send custom email with the generated link
+        from django.core.mail import send_mail
+        subject = "Password Reset Request"
+        message = f"""
+        Hello,
+        
+        You requested a password reset for your account.
+        
+        Click the following link to reset your password:
+        {action_link}
+        
+        This link will expire in 24 hours.
+        
+        If you didn't request this reset, please ignore this email.
+        
+        Best regards,
+        Hospital Readmission Team
+        """
+        
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],
+            fail_silently=False,
+        )
+
+        return Response({
+            "message": "If an account with that email exists, a password reset link has been sent."
+        }, status=status.HTTP_200_OK)
+
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": "Password reset email sent"}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def reset_password(request):
+    """
+    Reset password using Supabase tokens from email link.
+    Request: { "access_token": "...", "refresh_token": "..." (optional), "new_password": "..." }
+    """
+    access_token = request.data.get("access_token")
+    refresh_token = request.data.get("refresh_token")
+    new_password = request.data.get("new_password")
+
+    if not access_token or not new_password:
+        return Response(
+            {"error": "Access token and new password are required"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        # Validate user from access token
+        user_res = supabase.auth.get_user(access_token)
+        user = getattr(user_res, "user", None)
+
+        if not user:
+            return Response({"error": "Invalid or expired reset token"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        user_id = user.id
+
+        # Use admin API (requires service role key in settings.SUPABASE_KEY)
+        supabase.auth.admin.update_user_by_id(user_id, {"password": new_password})
+
+        # Optional: sign out session (best-effort)
+        try:
+            supabase.auth.sign_out()
+        except Exception:
+            pass
+
+        return Response(
+            {"message": "Password reset successfully. Please sign in with your new password."},
+            status=status.HTTP_200_OK,
+        )
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # -------- DOCTOR PROFILE -------- #

@@ -152,4 +152,7 @@ import os
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://axfhdlyvzqpxrijzhzsx.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4ZmhkbHl2enFweHJpanpoenN4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjA1NTE1NSwiZXhwIjoyMDcxNjMxMTU1fQ._fnYqyt57uhex2eDlIwVpiSgZuXTjvt9nX5HN4opFE8")  # use service role key
 
+# Frontend URL for password reset redirects
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 

@@ -107,6 +107,19 @@ export const authService = {
     }
   },
 
+  async resetPassword({ access_token, refresh_token, new_password }) {
+    try {
+      const response = await api.post('/doctor/reset-password/', {
+        access_token,
+        refresh_token,
+        new_password
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { error: 'Password reset failed' };
+    }
+  },
+
   // Management authentication
   async managementSignup(managementData) {
     try {
