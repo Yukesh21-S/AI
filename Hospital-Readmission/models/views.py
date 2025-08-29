@@ -141,7 +141,7 @@ def forgot_password(request):
 
     try:
         # Build redirect URL to frontend reset page
-        frontend_url = getattr(settings, "FRONTEND_URL", None) or "http://localhost:5173"
+        frontend_url = getattr(settings, "FRONTEND_URL", None) or "https://ai-neon-tau.vercel.app/"
         redirect_to = f"{frontend_url}/reset-password"
 
         # Generate recovery link with redirect_to

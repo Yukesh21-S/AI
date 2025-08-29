@@ -1,0 +1,26 @@
+# Core framework
+Django>=5.0,<6
+djangorestframework>=3.14,<4
+django-cors-headers>=4.3,<5
+whitenoise>=6.5,<7
+gunicorn>=21.2,<22
+
+# API docs (Swagger)
+drf-yasg>=1.21.7,<2
+PyYAML>=6.0,<7
+
+# Supabase client
+supabase>=2.8,<3
+
+# ML/Science stack for predictions and serialized model loading
+pandas>=2.2,<3
+numpy>=1.26,<2
+scipy>=1.11,<2
+scikit-learn>=1.3,<2
+joblib>=1.3,<2
+catboost>=1.2,<2
+matplotlib>=3.8,<4
+
+# Optional: timezone, env helpers (uncomment if you start using them)
+# python-dotenv>=1.0,<2
+
