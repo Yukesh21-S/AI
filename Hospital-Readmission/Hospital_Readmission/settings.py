@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-giumr7kli-97*k4(g4=4zm-l_!g#ub%-s8b^u6)1lrlguv61g&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -158,4 +158,11 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://ai-neon-tau.vercel.app/")
 
 
-ALLOWED_HOSTS = ["your-service-name.onrender.com", "localhost"]
+import os
+
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".onrender.com",   # allow all Render subdomains
+]
+PORT = os.getenv("PORT", "10000")
