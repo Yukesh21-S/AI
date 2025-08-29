@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Prefer env-configured API base URL, fall back to local dev
-const apiBaseUrl = import.meta?.env?.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
+const apiBaseUrl = import.meta?.env?.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api'
 
 // Create axios instance with base configuration for Django backend
 const api = axios.create({
@@ -9,7 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // 30 seconds (increased from 10)
+  timeout: 30000, // 30 seconds (increased from 10
 });
 
 // Track if we're currently clearing tokens to prevent loops
