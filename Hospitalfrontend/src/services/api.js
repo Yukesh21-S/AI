@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // Prefer env-configured API base URL, fall back to local dev
-const apiBaseUrl = import.meta?.env?.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api'
-
+const apiBaseUrl = "https://hospitalreadmission.onrender.com/api/" || 'http://127.0.0.1:8000/api'
+// import.meta?.env?.VITE_API_BASE_URL
 // Create axios instance with base configuration for Django backend
 const api = axios.create({
   baseURL: apiBaseUrl,
