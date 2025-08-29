@@ -45,7 +45,8 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite default
     "http://localhost:5174",  # sometimes Vite uses this
-    "http://localhost:5175",  # your current frontend
+    "http://localhost:5175",
+    "https://ai-neon-tau.vercel.app",# your current frontend
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -163,6 +164,7 @@ import os
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    ".onrender.com",   # allow all Render subdomains
+    ".onrender.com",
+    "ai-neon-tau.vercel.app",# allow all Render subdomains
 ]
 PORT = os.getenv("PORT", "10000")
