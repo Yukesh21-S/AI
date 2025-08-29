@@ -22,75 +22,42 @@ export const authService = {
         email: credentials.email,
         password: credentials.password
       });
-      
+
       console.log('Login response received:', response.data);
-      
-      // Handle different possible response structures
-      let accessToken = null;
-      let refreshToken = null;
-      let userId = null;
-      let userEmail = null;
-      let role = null;
-      let name = null;
-      let specialization = null;
-      
-      if (response.data.access_token) {
-        accessToken = response.data.access_token;
-        refreshToken = response.data.refresh_token;
-        userId = response.data.id;
-        userEmail = response.data.email;
-        role = response.data.role || 'doctor';
-        name = response.data.name || null;
-        specialization = response.data.specialization || null;
-      } else if (response.data.token) {
-        accessToken = response.data.token;
-        refreshToken = response.data.refresh_token;
-        userId = response.data.id;
-        userEmail = response.data.email;
-        role = response.data.role || 'doctor';
-        name = response.data.name || null;
-        specialization = response.data.specialization || null;
-      } else if (response.data.accessToken) {
-        accessToken = response.data.accessToken;
-        refreshToken = response.data.refreshToken;
-        userId = response.data.id;
-        userEmail = response.data.email;
-        role = response.data.role || 'doctor';
-        name = response.data.name || null;
-        specialization = response.data.specialization || null;
-      } else {
+
+      // normalize response fields
+      let accessToken = response.data.access_token || response.data.token || response.data.accessToken;
+      let refreshToken = response.data.refresh_token || response.data.refreshToken || null;
+
+      if (!accessToken) {
         console.error('No access token found in response:', response.data);
         throw new Error('No access token received from server');
       }
-      
-      if (accessToken) {
-        // Store tokens with timestamp (but do not auto-expire by time)
-        const now = Date.now();
-        localStorage.setItem('access_token', accessToken);
-        if (refreshToken) {
-          localStorage.setItem('refresh_token', refreshToken);
-        }
-        localStorage.setItem('token_timestamp', now.toString());
-        localStorage.setItem('userData', JSON.stringify({
-          id: userId || 'unknown',
-          email: userEmail || credentials.email,
-          role: role || 'doctor',
-          name: name,
-          specialization: specialization
-        }));
-        
-        console.log('Tokens stored successfully:', {
-          access_token: accessToken.substring(0, 20) + '...',
-          token_length: accessToken.length,
-          user_id: userId,
-          user_email: userEmail,
-          role,
-          name,
-          specialization,
-          timestamp: new Date(now).toISOString()
-        });
+
+      const userData = {
+        id: response.data.id || 'unknown',
+        email: response.data.email || credentials.email,
+        role: response.data.role || 'doctor',
+        name: response.data.name || null,
+        specialization: response.data.specialization || null
+      };
+
+      // Store tokens + user data
+      const now = Date.now();
+      localStorage.setItem('access_token', accessToken);
+      if (refreshToken) {
+        localStorage.setItem('refresh_token', refreshToken);
       }
-      
+      localStorage.setItem('token_timestamp', now.toString());
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      console.log('✅ Tokens stored successfully:', {
+        access_token: accessToken.substring(0, 20) + '...',
+        token_length: accessToken.length,
+        userData,
+        timestamp: new Date(now).toISOString()
+      });
+
       return response.data;
     } catch (error) {
       console.error('Login error:', error);
@@ -98,15 +65,17 @@ export const authService = {
     }
   },
 
+  // Forgot password (✅ no tokens needed)
   async forgotPassword(email) {
     try {
       const response = await api.post('/doctor/forgot-password/', { email });
       return response.data;
     } catch (error) {
-      throw error.response?.data || { error: 'Password reset failed' };
+      throw error.response?.data || { error: 'Password reset request failed' };
     }
   },
 
+  // Reset password (✅ no tokens from localStorage)
   async resetPassword({ access_token, refresh_token, new_password }) {
     try {
       const response = await api.post('/doctor/reset-password/', {
@@ -136,7 +105,7 @@ export const authService = {
 
   // Logout
   logout() {
-    console.log('Logging out - clearing all tokens');
+    console.log('🔑 Logging out - clearing tokens & user data only');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('userData');
@@ -145,8 +114,7 @@ export const authService = {
 
   // Check if user is authenticated (persist until explicit logout)
   isAuthenticated() {
-    const token = localStorage.getItem('access_token');
-    return !!token;
+    return !!localStorage.getItem('access_token');
   },
 
   // Get current user role
@@ -166,12 +134,12 @@ export const authService = {
     return localStorage.getItem('access_token');
   },
 
-  // Check token status
+  // Check token status (debug helper)
   getTokenStatus() {
     const token = localStorage.getItem('access_token');
     const timestamp = localStorage.getItem('token_timestamp');
     const userData = localStorage.getItem('userData');
-    
+
     return {
       hasToken: !!token,
       tokenLength: token?.length || 0,
