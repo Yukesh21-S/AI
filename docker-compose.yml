@@ -1,62 +1,62 @@
-version: '3.8'
+# version: '3.8'
 
-services:
-  # Django Backend
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    environment:
-      - DEBUG=True
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - FRONTEND_URL=http://localhost:5173
-      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-    volumes:
-      - ./Hospital-Readmission:/app/Hospital-Readmission
-    depends_on:
-      - db
-    networks:
-      - hospital-network
+# services:
+#   # Django Backend
+#   backend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - DEBUG=True
+#       - SUPABASE_URL=${SUPABASE_URL}
+#       - SUPABASE_KEY=${SUPABASE_KEY}
+#       - FRONTEND_URL=http://localhost:5173
+#       - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+#       - EMAIL_HOST=${EMAIL_HOST}
+#       - EMAIL_PORT=${EMAIL_PORT}
+#       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+#       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+#       - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+#     volumes:
+#       - ./Hospital-Readmission:/app/Hospital-Readmission
+#     depends_on:
+#       - db
+#     networks:
+#       - hospital-network
 
-  # React Frontend
-  frontend:
-    build:
-      context: ./Hospitalfrontend
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    environment:
-      - VITE_API_URL=http://localhost:8000/api
-    depends_on:
-      - backend
-    networks:
-      - hospital-network
+#   # React Frontend
+#   frontend:
+#     build:
+#       context: ./Hospitalfrontend
+#       dockerfile: Dockerfile
+#     ports:
+#       - "5173:5173"
+#     environment:
+#       - VITE_API_URL=http://localhost:8000/api
+#     depends_on:
+#       - backend
+#     networks:
+#       - hospital-network
 
-  # PostgreSQL Database (optional - you can use Supabase instead)
-  db:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=hospital_readmission
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - hospital-network
+#   # PostgreSQL Database (optional - you can use Supabase instead)
+#   db:
+#     image: postgres:15
+#     environment:
+#       - POSTGRES_DB=hospital_readmission
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#     networks:
+#       - hospital-network
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
 
-networks:
-  hospital-network:
-    driver: bridge
+# networks:
+#   hospital-network:
+#     driver: bridge
