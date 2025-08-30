@@ -227,6 +227,15 @@ const Signup = () => {
             </button>
           </div>
         </form>
+         <div className="text-center">
+          <Link
+                      to="/login"
+                      className="inline-flex items-center text-primary-600 hover:text-primary-500"
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Back to login
+                    </Link>
+                    </div>
       </div>
     </div>
   )
