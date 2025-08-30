@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { 
   Home, 
@@ -28,11 +28,11 @@ const Layout = () => {
   const doctorNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Patients', href: '/patients', icon: Users },
-    { name: 'AddPatient', href: '/patients/add', icon: Plus },
+    { name: 'Add Patient', href: '/patients/add', icon: Plus },
   ]
 
   const managementNavigation = [
-    { name: 'ManagementDashboard', href: '/management/dashboard', icon: Building },
+    { name: 'Management Dashboard', href: '/management/dashboard', icon: Building },
     { name: 'Analytics', href: '/management/analytics', icon: BarChart3 },
     { name: 'Doctors', href: '/management/doctors', icon: UserCheck },
   ]
@@ -89,9 +89,9 @@ const Layout = () => {
           </div>
           <nav className="p-4 space-y-2">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
                   isActive(item.href)
                     ? 'bg-primary-100 text-primary-700'
@@ -100,7 +100,7 @@ const Layout = () => {
               >
                 <item.icon className="w-5 h-5 mr-3" />
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -116,9 +116,9 @@ const Layout = () => {
           </div>
           <nav className="flex-1 p-6 space-y-2">
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
                   isActive(item.href)
                     ? 'bg-primary-100 text-primary-700'
@@ -127,7 +127,7 @@ const Layout = () => {
               >
                 <item.icon className="w-5 h-5 mr-3" />
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
