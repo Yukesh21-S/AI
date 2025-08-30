@@ -198,7 +198,7 @@ const Dashboard = () => {
 
       {/* Recent Activity */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-secondary-900 mb-4">Rec+ent Activity</h3>
+        <h3 className="text-lg font-semibold text-secondary-900 mb-4">Recent Activity</h3>
         {recent.length === 0 ? (
           <p className="text-sm text-secondary-500">No recent activity</p>
         ) : (
