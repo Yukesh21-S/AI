@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Mail, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
+import AuthIllustration from '../components/AuthIllustration'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('')
@@ -34,8 +35,17 @@ const ForgotPassword = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
+      <div className="min-h-screen flex bg-secondary-50">
+        {/* Left side - Illustration */}
+        <div className="hidden lg:flex lg:w-1/2 lg:items-center lg:justify-center p-8">
+          <div className="w-full max-w-md h-96">
+            <AuthIllustration type="login" />
+          </div>
+        </div>
+        
+        {/* Right side - Success Message */}
+        <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md w-full space-y-8">
           <div>
             <div className="mx-auto h-12 w-12 bg-green-600 rounded-full flex items-center justify-center">
               <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,13 +73,23 @@ const ForgotPassword = () => {
             </Link>
           </div>
         </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex bg-secondary-50">
+      {/* Left side - Illustration */}
+      <div className="hidden lg:flex lg:w-1/2 lg:items-center lg:justify-center p-8">
+        <div className="w-full max-w-md h-96">
+          <AuthIllustration type="login" />
+        </div>
+      </div>
+      
+      {/* Right side - Reset Form */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
         <div>
           <div className="mx-auto h-12 w-12 bg-primary-600 rounded-full flex items-center justify-center">
             <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,6 +147,7 @@ const ForgotPassword = () => {
             </Link>
           </div>
         </form>
+        </div>
       </div>
     </div>
   )

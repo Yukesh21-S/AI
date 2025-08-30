@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Eye, EyeOff, Mail, Lock, User, Stethoscope } from 'lucide-react'
 import toast from 'react-hot-toast'
+import AuthIllustration from '../components/AuthIllustration'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -64,8 +65,17 @@ const Signup = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex bg-secondary-50">
+      {/* Left side - Illustration */}
+      <div className="hidden lg:flex lg:w-1/2 lg:items-center lg:justify-center p-8">
+        <div className="w-full max-w-md h-96">
+          <AuthIllustration type="signup" />
+        </div>
+      </div>
+      
+      {/* Right side - Signup Form */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
         <div>
           <div className="mx-auto h-12 w-12 bg-primary-600 rounded-full flex items-center justify-center">
             <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -227,15 +237,7 @@ const Signup = () => {
             </button>
           </div>
         </form>
-         <div className="text-center">
-          <Link
-                      to="/login"
-                      className="inline-flex items-center text-primary-600 hover:text-primary-500"
-                    >
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                      Back to login
-                    </Link>
-                    </div>
+        </div>
       </div>
     </div>
   )
