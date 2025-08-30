@@ -28,11 +28,11 @@ const Layout = () => {
   const doctorNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Patients', href: '/patients', icon: Users },
-    { name: 'Add Patient', href: '/patients/add', icon: Plus },
+    { name: 'AddPatient', href: '/patients/add', icon: Plus },
   ]
 
   const managementNavigation = [
-    { name: 'Management Dashboard', href: '/management/dashboard', icon: Building },
+    { name: 'ManagementDashboard', href: '/management/dashboard', icon: Building },
     { name: 'Analytics', href: '/management/analytics', icon: BarChart3 },
     { name: 'Doctors', href: '/management/doctors', icon: UserCheck },
   ]
