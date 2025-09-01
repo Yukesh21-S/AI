@@ -53,17 +53,25 @@ const Analytics = () => {
       const analyticsResponse = await managementAPI.getAnalyticsData()
       const analyticsData = analyticsResponse.data
       
-      // Generate monthly data based on current month (simulated for now)
+      // Generate monthly data based on current data (using real patient counts)
       const currentMonth = new Date().getMonth()
       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       const monthlyData = []
       
+      // Use real data to generate monthly trends
+      const totalPatients = analyticsData.total_patients || 0
+      const readmittedPatients = analyticsData.readmitted_patients || 0
+      
       for (let i = 5; i >= 0; i--) {
         const monthIndex = (currentMonth - i + 12) % 12
+        // Distribute patients across months based on real data
+        const monthlyPatients = Math.floor(totalPatients / 6) + (i === 0 ? totalPatients % 6 : 0)
+        const monthlyReadmissions = Math.floor(readmittedPatients / 6) + (i === 0 ? readmittedPatients % 6 : 0)
+        
         monthlyData.push({
           month: monthNames[monthIndex],
-          patients: Math.floor(Math.random() * 20) + analyticsData.total_patients * 0.1,
-          readmissions: Math.floor(Math.random() * 5) + analyticsData.high_risk_patients * 0.1
+          patients: monthlyPatients,
+          readmissions: monthlyReadmissions
         })
       }
       
@@ -169,22 +177,6 @@ const Analytics = () => {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Patients by Doctor */}
-        <div className="card">
-          <h3 className="text-lg font-semibold text-secondary-900 mb-4">Patients by Doctor</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={stats.patientsByDoctor}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="doctor" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="patients" fill="#3B82F6" name="Total Patients" />
-              <Bar dataKey="highRisk" fill="#EF4444" name="High Risk" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Monthly Trends */}
         <div className="card">
           <h3 className="text-lg font-semibold text-secondary-900 mb-4">Monthly Patient Trends</h3>
@@ -212,10 +204,7 @@ const Analytics = () => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-      </div>
 
-      {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Age Distribution */}
         <div className="card">
           <h3 className="text-lg font-semibold text-secondary-900 mb-4">Age Distribution</h3>
@@ -245,7 +234,10 @@ const Analytics = () => {
             </div>
           )}
         </div>
+      </div>
 
+      {/* Charts Row 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Risk by Age */}
         <div className="card">
           <h3 className="text-lg font-semibold text-secondary-900 mb-4">Risk Level by Age Group</h3>
