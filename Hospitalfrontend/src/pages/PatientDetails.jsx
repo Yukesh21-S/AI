@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { 
   ArrowLeft, 
@@ -32,6 +32,9 @@ const PatientDetails = () => {
   const [messages, setMessages] = useState([])
   const [loadingMessages, setLoadingMessages] = useState(false)
 
+  // 🔑 Ref for message form
+  const messageFormRef = useRef(null)
+
   useEffect(() => {
     fetchPatientDetails()
   }, [id])
@@ -46,6 +49,13 @@ const PatientDetails = () => {
   useEffect(() => {
     fetchMessages()
   }, [id])
+
+  // 🔑 Auto-scroll to form when opened
+  useEffect(() => {
+    if (showMessageForm && messageFormRef.current) {
+      messageFormRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [showMessageForm])
 
   const fetchPatientDetails = async () => {
     try {
@@ -207,7 +217,7 @@ const PatientDetails = () => {
             🗑️ Delete
           </button>
           <button
-            onClick={() => setShowMessageForm(!showMessageForm)}
+            onClick={() => setShowMessageForm(true)}
             className="btn-primary inline-flex items-center"
           >
             <MessageSquare className="w-4 h-4 mr-2" />
@@ -369,7 +379,7 @@ const PatientDetails = () => {
 
           {/* Message Form */}
           {showMessageForm && (
-            <div className="card">
+            <div className="card" ref={messageFormRef}>
               <h3 className="text-lg font-semibold text-secondary-900 mb-4">Send Follow-up Message</h3>
               <form onSubmit={handleSendMessage} className="space-y-4">
                 <div>
@@ -420,7 +430,7 @@ const PatientDetails = () => {
                 Edit Patient
               </button>
               <button
-                onClick={() => setShowMessageForm(!showMessageForm)}
+                onClick={() => setShowMessageForm(true)}
                 className="w-full btn-primary text-left"
               >
                 <MessageSquare className="w-4 h-4 mr-2 inline" />
@@ -435,24 +445,26 @@ const PatientDetails = () => {
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-secondary-900 mb-4">Contact</h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-secondary-400" />
-                <span className="text-sm text-secondary-900">{patient.phonenumber}</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-secondary-400" />
-                <span className="text-sm text-secondary-900">{patient.email}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+         {/* Contact Information */}
+<div className="card">
+  <h3 className="text-lg font-semibold text-secondary-900 mb-4">Contact</h3>
+  <div className="space-y-3">
+    <div className="flex items-center space-x-3">
+      <Phone className="w-4 h-4 text-secondary-400" />
+      <span className="text-sm text-secondary-900">{patient.phonenumber}</span>
     </div>
-  )
-}
+    <div className="flex items-center space-x-3">
+      <Mail className="w-4 h-4 text-secondary-400" />
+      <span className="text-sm text-secondary-900">{patient.email}</span>
+    </div>
+  </div>
+</div>  
+</div> 
+</div>  
+</div>  
 
-export default PatientDetails
+);  // closes return
+
+}; // closes PatientDetails component
+
+export default PatientDetails;
