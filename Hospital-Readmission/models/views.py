@@ -176,11 +176,13 @@ def forgot_password(request):
         """
         
         send_mail(
+
             subject=subject,
             message=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[email],
             fail_silently=False,
+            
         )
 
         return Response({
